@@ -1,7 +1,7 @@
 'use client';
 
 import styled from '@emotion/styled';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useAnimate } from 'framer-motion';
 import { FinContext } from '~components/FinProvider';
 import { OFFSET_ERROR } from '~const';
@@ -70,10 +70,11 @@ function Fins(props: FinsProps) {
   const { children } = props;
 
   // lib hooks
-  const { next, nextPath, indicatorX } = useContext(FinContext);
+  const { next, nextPath, indicatorX, register } = useContext(FinContext);
   const [scope, animate] = useAnimate();
 
   // state, ref, querystring hooks
+  const [initialized, setInitialized] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // form hooks
@@ -83,6 +84,18 @@ function Fins(props: FinsProps) {
   // calculated values
 
   // effects
+  useEffect(() => {
+    register({
+      type: 'setting',
+      handler: async (event) => {
+        await animate(scope.current, { x: event.indicatorX, scale: 0.8, opacity: 0 }, { duration: 0 });
+        await animate(scope.current, { scale: 1, opacity: 1 });
+
+        setInitialized(true);
+      },
+    });
+  }, []);
+
   useEffect(() => {
     if (containerRef.current) {
       const initialFin = containerRef.current.querySelector<HTMLDivElement>('.fin-index--container');
@@ -113,8 +126,10 @@ function Fins(props: FinsProps) {
       });
     };
 
-    indicatorAnimation();
-  }, [indicatorX]);
+    if (initialized) {
+      indicatorAnimation();
+    }
+  }, [indicatorX, initialized]);
 
   // handlers
 
