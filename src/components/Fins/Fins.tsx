@@ -1,7 +1,7 @@
 'use client';
 
 import styled from '@emotion/styled';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useAnimate } from 'framer-motion';
 import { FinContext } from '~components/FinProvider';
 import { OFFSET_ERROR } from '~const';
@@ -9,7 +9,6 @@ import { OFFSET_ERROR } from '~const';
 const FinsContainer = styled.div`
   max-width: 310px;
   width: fit-content;
-  overflow: auto;
 `;
 
 const FinsWrapper = styled.div`
@@ -26,6 +25,7 @@ const FinsWrapper = styled.div`
   padding: 5px 10px;
 
   position: relative;
+  overflow: auto;
 `;
 
 const IndicatorContainer = styled.div`
@@ -70,11 +70,10 @@ function Fins(props: FinsProps) {
   const { children } = props;
 
   // lib hooks
-  const { next, register, nextPath } = useContext(FinContext);
+  const { next, nextPath, indicatorX } = useContext(FinContext);
   const [scope, animate] = useAnimate();
 
   // state, ref, querystring hooks
-  const [indicatorX, setIndicatorX] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // form hooks
@@ -86,39 +85,24 @@ function Fins(props: FinsProps) {
   // effects
   useEffect(() => {
     if (containerRef.current) {
-      const initialFin = containerRef.current.querySelector<HTMLDivElement>('.fin-index');
+      const initialFin = containerRef.current.querySelector<HTMLDivElement>('.fin-index--container');
       if (!initialFin) throw Error('Need activated Fin component');
 
       const path = initialFin.dataset.path ?? '';
       let indicatorX = initialFin.offsetLeft - OFFSET_ERROR;
+
       if (indicatorX < 0) indicatorX = 0;
       next({
         type: 'setting',
         currentPath: path,
         indicatorX,
       });
-      setIndicatorX(indicatorX);
     }
   }, [containerRef]);
 
   useEffect(() => {
-    register({
-      type: 'start',
-      handler: (event, patcher) => {
-        const { indicatorX } = event;
-        if (indicatorX !== undefined) {
-          setIndicatorX(indicatorX);
-        }
-
-        patcher(event);
-      },
-    });
-  }, []);
-
-  useEffect(() => {
     const indicatorAnimation = async () => {
       await animate(scope.current, {
-        opacity: '1',
         x: indicatorX,
       });
 

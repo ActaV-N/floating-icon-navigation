@@ -11,11 +11,7 @@ export interface Event {
   indicatorX?: number;
 }
 
-type Handler = (
-  event: Event,
-  patcher: (patch: Partial<Pick<FinContext, 'currentPath' | 'nextPath'>>) => void,
-  ...args: any[]
-) => void;
+type Handler = (event: Event, ...args: any[]) => void;
 export interface EventHandler {
   type: EventType;
   handler: Handler;
@@ -25,6 +21,7 @@ export interface FinContext {
   next: (event: Event) => void;
   currentPath: string;
   nextPath?: string;
+  indicatorX?: number;
   register: (handler: EventHandler | EventHandler[]) => void;
 }
 
@@ -46,8 +43,12 @@ function FinProvider(props: FinProviderProps) {
 
   // state, ref, querystring hooks
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // Event, context state
   const [currentPath, setCurrentPath] = useState<string>('');
   const [nextPath, setNextPath] = useState<string>();
+  const [indicatorX, setIndicatorX] = useState<number>();
+
   const finSubject = useRef<Subject<Event>>(new Subject());
   const handlers = useRef<EventHandler[]>([]);
 
@@ -67,21 +68,12 @@ function FinProvider(props: FinProviderProps) {
     finSubject.current.subscribe((event: Event) => {
       handlers.current.forEach((eventHandler) => {
         if (eventHandler.type === event.type) {
-          eventHandler.handler(event, (patch) => {
-            const { currentPath, nextPath } = patch;
-            console.log(patch);
-            if (currentPath) setCurrentPath(currentPath);
-            if (nextPath) setNextPath(nextPath);
-          });
+          setCurrentPath(event.currentPath);
+          setNextPath(event.nextPath);
+          setIndicatorX(event.indicatorX);
+          eventHandler.handler(event);
         }
       });
-    });
-
-    register({
-      type: 'setting',
-      handler: (event) => {
-        setCurrentPath(event.currentPath);
-      },
     });
     setIsLoading(false);
   }, [register]);
@@ -96,6 +88,7 @@ function FinProvider(props: FinProviderProps) {
         next: (event) => finSubject.current.next(event),
         currentPath,
         nextPath,
+        indicatorX,
         register,
       }}
     >

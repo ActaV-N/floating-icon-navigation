@@ -27,8 +27,8 @@ export default {
   args: {
     children: (
       <>
-        <Fin index path='alert' icon={<AiFillAlert />} />
-        <Fin path='square' icon={<AiFillAlipaySquare />} />
+        <Fin path='alert' activeColor='#FA5252' icon={<AiFillAlert />} />
+        <Fin index path='square' activeColor='#20C997' icon={<AiFillAlipaySquare />} />
         <Fin path='circle' icon={<AiFillAmazonCircle />} />
       </>
     ),

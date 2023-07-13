@@ -40,9 +40,13 @@ const FinIcon = styled.div<{ color: string }>`
   width: 26px;
   height: 26px;
 
-  color: ${(props) => props.color};
+  color: #1e1e1e;
 
   transition: color 0.2s ${EASE_IN_OUT};
+
+  .fin-active & {
+    color: ${(props) => props.color};
+  }
 `;
 
 export interface FinProps {
@@ -120,11 +124,10 @@ function Fin(props: FinProps) {
   };
 
   return (
-    <FinContainer ref={me} className={`fin-${path}--container`}>
+    <FinContainer ref={me} className={cx(`fin-${path}--container`, index && 'fin-index--container')} data-path={path}>
       <FinWrapper
         onClick={handleNavigate}
         className={cx(`fin-${path}--wrapper`, index && 'fin-index', active && 'fin-active')}
-        data-path={path}
       >
         <FinIcon color={color}>{icon}</FinIcon>
       </FinWrapper>
