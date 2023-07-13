@@ -1,4 +1,6 @@
+import React from 'react';
 import type { Preview } from '@storybook/react';
+import { FinProvider } from '../src/components/FinProvider';
 
 const preview: Preview = {
   parameters: {
@@ -10,6 +12,7 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [(Story) => <FinProvider>{Story()}</FinProvider>],
 };
 
 export default preview;

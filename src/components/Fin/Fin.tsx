@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import styled from '@emotion/styled';
+import { cx } from '@emotion/css';
 import { DEFAULT_COLOR } from './const';
 import { EASE_IN_OUT } from '~const';
+import { FinContext } from '~components/FinProvider';
 
 const FinContainer = styled.div`
   width: 48px;
@@ -46,6 +48,7 @@ const FinIcon = styled.div<{ color: string }>`
 
 export interface FinProps {
   icon: React.ReactNode;
+  path: string;
   active?: boolean | string;
 }
 
@@ -60,9 +63,10 @@ export interface FinProps {
  */
 function Fin(props: FinProps) {
   // prop destruction
-  const { icon, active } = props;
+  const { icon, active, path } = props;
 
   // lib hooks
+  const { next, current } = useContext(FinContext);
 
   // state, ref, querystring hooks
 
@@ -82,10 +86,16 @@ function Fin(props: FinProps) {
   // effects
 
   // handlers
+  const handleNavigate = () => {
+    next({
+      current,
+      type: 'start',
+    });
+  };
 
   return (
     <FinContainer>
-      <FinWrapper>
+      <FinWrapper onClick={handleNavigate} className={cx(`fin-${path}`, active && 'fin-active')} data-path={path}>
         <FinIcon color={color}>{icon}</FinIcon>
       </FinWrapper>
     </FinContainer>

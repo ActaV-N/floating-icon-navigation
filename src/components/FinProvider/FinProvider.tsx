@@ -10,10 +10,12 @@ export interface Event {
 
 export interface FinContext {
   next: (event: Event) => void;
+  current: string;
 }
 
 export const FinContext = createContext<FinContext>({
   next: () => {},
+  current: '',
 });
 
 export interface FinProviderProps {
@@ -40,7 +42,9 @@ function FinProvider(props: FinProviderProps) {
   // handlers
 
   return (
-    <FinContext.Provider value={{ next: (event) => finSubject.current.next(event) }}>{children}</FinContext.Provider>
+    <FinContext.Provider value={{ next: (event) => finSubject.current.next(event), current: '' }}>
+      {children}
+    </FinContext.Provider>
   );
 }
 
