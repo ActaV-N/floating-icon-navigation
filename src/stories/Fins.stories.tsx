@@ -1,6 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
-import { AiFillAlert, AiFillAlipaySquare, AiFillAmazonCircle } from 'react-icons/ai';
+import {
+  AiFillAlert,
+  AiFillAlipaySquare,
+  AiFillAmazonCircle,
+  AiFillAudio,
+  AiFillBank,
+  AiFillBell,
+  AiFillCaretUp,
+} from 'react-icons/ai';
 import { Fins, Fin } from '~components';
 
 type ArgTypes = ComponentProps<typeof Fins>;
@@ -36,3 +44,33 @@ export default {
 } as Meta<ArgTypes>;
 
 export const Default: StoryObj<ArgTypes> = {};
+
+export const Fit: StoryObj<ArgTypes> = {
+  args: {
+    children: (
+      <>
+        <Fin path='alert' activeColor='#FA5252' icon={<AiFillAlert />} />
+        <Fin index path='square' activeColor='#20C997' icon={<AiFillAlipaySquare />} />
+        <Fin path='circle' icon={<AiFillAmazonCircle />} />
+        <Fin path='audio' icon={<AiFillAudio />} />
+        <Fin path='bank' icon={<AiFillBank />} />
+      </>
+    ),
+  },
+};
+
+export const ManyItem: StoryObj<ArgTypes> = {
+  args: {
+    children: (
+      <>
+        <Fin path='alert' activeColor='#FA5252' icon={<AiFillAlert />} />
+        <Fin index path='square' activeColor='#20C997' icon={<AiFillAlipaySquare />} />
+        <Fin path='circle' icon={<AiFillAmazonCircle />} />
+        <Fin path='audio' icon={<AiFillAudio />} />
+        <Fin path='bank' icon={<AiFillBank />} />
+        <Fin path='bell' icon={<AiFillBell />} />
+        <Fin path='care' icon={<AiFillCaretUp />} />
+      </>
+    ),
+  },
+};

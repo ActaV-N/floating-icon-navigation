@@ -9,6 +9,7 @@ export default {
   title: 'Components/Fin',
   component: Fin,
   args: {
+    path: '/',
     icon: <AiFillAccountBook />,
   },
 } as Meta<ArgTypes>;

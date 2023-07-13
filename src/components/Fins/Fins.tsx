@@ -22,7 +22,7 @@ const FinsWrapper = styled.div`
   background: rgba(255, 255, 255, 0.6);
   border-radius: 29px;
 
-  padding: 5px 10px;
+  padding: ${OFFSET_ERROR}px;
 
   position: relative;
   overflow: auto;
@@ -35,7 +35,7 @@ const IndicatorContainer = styled.div`
   right: 0;
   bottom: 0;
 
-  padding: 5px 10px;
+  padding: ${OFFSET_ERROR}px;
 `;
 
 const Indicator = styled.div`
