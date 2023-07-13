@@ -17,9 +17,33 @@ const FinsWrapper = styled.div`
   justify-content: space-between;
 
   background: rgba(255, 255, 255, 0.6);
+  border-radius: 29px;
+
+  padding: 5px 10px;
+
+  position: relative;
+`;
+
+const IndicatorContainer = styled.div`
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  padding: 5px 10px;
+`;
+
+const Indicator = styled.div`
+  position: absolute;
+
+  height: 48px;
+  aspect-ratio: 1;
+
   border-radius: 24px;
 
-  padding: 0 10px;
+  background: #fff;
 `;
 
 export interface FinsProps {
@@ -58,7 +82,12 @@ function Fins(props: FinsProps) {
 
   return (
     <FinsContainer>
-      <FinsWrapper>{children}</FinsWrapper>
+      <FinsWrapper>
+        <IndicatorContainer>
+          <Indicator className='indicator' />
+        </IndicatorContainer>
+        {children}
+      </FinsWrapper>
     </FinsContainer>
   );
 }

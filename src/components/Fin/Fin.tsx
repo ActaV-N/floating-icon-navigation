@@ -11,6 +11,10 @@ const FinContainer = styled.div`
 
   border-radius: 24px;
   overflow: hidden;
+
+  position: relative;
+
+  cursor: pointer;
 `;
 
 const FinWrapper = styled.div`
