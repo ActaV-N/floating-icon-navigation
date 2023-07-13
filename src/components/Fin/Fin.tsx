@@ -28,7 +28,7 @@ const FinWrapper = styled.div`
   align-items: center;
 
   transition: background-color 0.2s ${EASE_IN_OUT};
-  &: hover {
+  &:not(.fin-active): hover {
     background-color: rgba(30, 30, 30, 0.3);
   }
 `;
@@ -66,7 +66,7 @@ function Fin(props: FinProps) {
   const { icon, active, path } = props;
 
   // lib hooks
-  const { next, current } = useContext(FinContext);
+  const { next, currentPath } = useContext(FinContext);
 
   // state, ref, querystring hooks
 
@@ -88,7 +88,7 @@ function Fin(props: FinProps) {
   // handlers
   const handleNavigate = () => {
     next({
-      current,
+      currentPath,
       type: 'start',
     });
   };

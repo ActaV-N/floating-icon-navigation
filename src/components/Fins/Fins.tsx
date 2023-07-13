@@ -1,6 +1,8 @@
 'use client';
 
 import styled from '@emotion/styled';
+import { useContext, useEffect, useRef } from 'react';
+import { FinContext } from '~components/FinProvider';
 
 const FinsContainer = styled.div`
   max-width: 310px;
@@ -25,7 +27,6 @@ const FinsWrapper = styled.div`
 `;
 
 const IndicatorContainer = styled.div`
-  z-index: -1;
   position: absolute;
   top: 0;
   left: 0;
@@ -67,8 +68,10 @@ function Fins(props: FinsProps) {
   const { children } = props;
 
   // lib hooks
+  const { next } = useContext(FinContext);
 
   // state, ref, querystring hooks
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // form hooks
 
@@ -77,11 +80,24 @@ function Fins(props: FinsProps) {
   // calculated values
 
   // effects
+  useEffect(() => {
+    if (containerRef.current) {
+      const initialFin = containerRef.current.querySelector<HTMLDivElement>('.fin-active');
+      if (!initialFin) throw Error('Need activated Fin component');
+
+      const path = initialFin.dataset.path ?? '';
+
+      next({
+        type: 'setting',
+        currentPath: path,
+      });
+    }
+  }, [containerRef, next]);
 
   // handlers
 
   return (
-    <FinsContainer>
+    <FinsContainer ref={containerRef}>
       <FinsWrapper>
         <IndicatorContainer>
           <Indicator className='indicator' />

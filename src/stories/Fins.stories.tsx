@@ -27,7 +27,7 @@ export default {
   args: {
     children: (
       <>
-        <Fin path='alert' icon={<AiFillAlert />} />
+        <Fin active path='alert' icon={<AiFillAlert />} />
         <Fin path='square' icon={<AiFillAlipaySquare />} />
         <Fin path='circle' icon={<AiFillAmazonCircle />} />
       </>

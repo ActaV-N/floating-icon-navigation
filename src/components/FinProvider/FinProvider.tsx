@@ -1,21 +1,21 @@
 'use client';
 
-import React, { createContext, useRef } from 'react';
+import React, { createContext, useEffect, useRef, useState } from 'react';
 import { Subject } from 'rxjs';
 
 export interface Event {
-  type: 'start' | 'end';
-  current: string;
+  type: 'start' | 'end' | 'setting';
+  currentPath: string;
 }
 
 export interface FinContext {
   next: (event: Event) => void;
-  current: string;
+  currentPath: string;
 }
 
 export const FinContext = createContext<FinContext>({
   next: () => {},
-  current: '',
+  currentPath: '',
 });
 
 export interface FinProviderProps {
@@ -29,6 +29,8 @@ function FinProvider(props: FinProviderProps) {
   // lib hooks
 
   // state, ref, querystring hooks
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [currentPath, setCurrentPath] = useState<string>('');
   const finSubject = useRef<Subject<Event>>(new Subject());
 
   // form hooks
@@ -38,11 +40,22 @@ function FinProvider(props: FinProviderProps) {
   // calculated values
 
   // effects
+  useEffect(() => {
+    finSubject.current.subscribe((event: Event) => {
+      console.log(event.type, event.currentPath);
+      if (event.type === 'setting') {
+        setCurrentPath(event.currentPath);
+      }
+    });
+    setIsLoading(false);
+  }, []);
 
   // handlers
 
+  if (isLoading) return <></>;
+
   return (
-    <FinContext.Provider value={{ next: (event) => finSubject.current.next(event), current: '' }}>
+    <FinContext.Provider value={{ next: (event) => finSubject.current.next(event), currentPath }}>
       {children}
     </FinContext.Provider>
   );
