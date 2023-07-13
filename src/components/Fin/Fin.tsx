@@ -87,8 +87,10 @@ function Fin(props: FinProps) {
 
   // handlers
   const handleNavigate = () => {
+    if (active) return;
     next({
       currentPath,
+      nextPath: path,
       type: 'start',
     });
   };

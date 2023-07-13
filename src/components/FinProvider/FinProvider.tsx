@@ -6,11 +6,13 @@ import { Subject } from 'rxjs';
 export interface Event {
   type: 'start' | 'end' | 'setting';
   currentPath: string;
+  nextPath?: string;
 }
 
 export interface FinContext {
   next: (event: Event) => void;
   currentPath: string;
+  nextPath?: string;
 }
 
 export const FinContext = createContext<FinContext>({
@@ -42,7 +44,6 @@ function FinProvider(props: FinProviderProps) {
   // effects
   useEffect(() => {
     finSubject.current.subscribe((event: Event) => {
-      console.log(event.type, event.currentPath);
       if (event.type === 'setting') {
         setCurrentPath(event.currentPath);
       }
