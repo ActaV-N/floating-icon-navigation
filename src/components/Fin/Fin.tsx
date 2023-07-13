@@ -24,6 +24,11 @@ const FinWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transition: background-color 0.2s ${EASE_IN_OUT};
+  &: hover {
+    background-color: rgba(30, 30, 30, 0.3);
+  }
 `;
 
 const FinIcon = styled.div<{ color: string }>`

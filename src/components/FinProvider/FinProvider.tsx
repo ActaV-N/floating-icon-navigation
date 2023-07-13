@@ -4,7 +4,7 @@ import React, { createContext } from 'react';
 
 interface FinContext {}
 
-const FinContext = createContext<FinContext>({});
+export const FinContext = createContext<FinContext>({});
 
 interface FinProviderProps {
   children: React.ReactNode;
