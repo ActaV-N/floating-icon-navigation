@@ -1,12 +1,22 @@
 'use client';
 
-import React, { createContext } from 'react';
+import React, { createContext, useRef } from 'react';
+import { Subject } from 'rxjs';
 
-interface FinContext {}
+export interface Event {
+  type: 'start' | 'end';
+  current: string;
+}
 
-export const FinContext = createContext<FinContext>({});
+export interface FinContext {
+  next: (event: Event) => void;
+}
 
-interface FinProviderProps {
+export const FinContext = createContext<FinContext>({
+  next: () => {},
+});
+
+export interface FinProviderProps {
   children: React.ReactNode;
 }
 
@@ -17,6 +27,7 @@ function FinProvider(props: FinProviderProps) {
   // lib hooks
 
   // state, ref, querystring hooks
+  const finSubject = useRef<Subject<Event>>(new Subject());
 
   // form hooks
 
@@ -28,7 +39,9 @@ function FinProvider(props: FinProviderProps) {
 
   // handlers
 
-  return <FinContext.Provider value={{}}>{children}</FinContext.Provider>;
+  return (
+    <FinContext.Provider value={{ next: (event) => finSubject.current.next(event) }}>{children}</FinContext.Provider>
+  );
 }
 
 export { FinProvider };
