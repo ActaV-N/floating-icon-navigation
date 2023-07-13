@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { cx } from '@emotion/css';
-import { DEFAULT_COLOR } from './const';
-import { EASE_IN_OUT } from '~const';
+import { EASE_IN_OUT, DEFAULT_COLOR, OFFSET_ERROR } from '~const';
 import { FinContext } from '~components/FinProvider';
 
 const FinContainer = styled.div`
@@ -67,9 +66,11 @@ function Fin(props: FinProps) {
   const { icon, index, path, activeColor } = props;
 
   // lib hooks
-  const { next, currentPath } = useContext(FinContext);
+  const { next, currentPath, register } = useContext(FinContext);
 
   // state, ref, querystring hooks
+  const [active, setActive] = useState<boolean>(false);
+  const me = useRef<HTMLDivElement>(null);
 
   // form hooks
 
@@ -77,9 +78,35 @@ function Fin(props: FinProps) {
 
   // calculated values
   const color = useMemo(() => activeColor ?? DEFAULT_COLOR, [activeColor]);
-  const active = useMemo<boolean>(() => currentPath === path, [currentPath, path]);
+
+  const myPositionX = useMemo(() => {
+    if (me.current) {
+      return me.current.offsetLeft - OFFSET_ERROR;
+    }
+
+    return undefined;
+  }, [me.current]);
 
   // effects
+  useEffect(() => {
+    register([
+      {
+        type: 'setting',
+        handler: (event) => {
+          if (event.currentPath === path) {
+            setActive(true);
+          }
+        },
+      },
+      {
+        type: 'start',
+        handler: (event) => {
+          if (event.nextPath === path) setActive(true);
+          else setActive(false);
+        },
+      },
+    ]);
+  }, []);
 
   // handlers
   const handleNavigate = () => {
@@ -87,12 +114,13 @@ function Fin(props: FinProps) {
     next({
       currentPath,
       nextPath: path,
+      indicatorX: myPositionX,
       type: 'start',
     });
   };
 
   return (
-    <FinContainer className={`fin-${path}--container`}>
+    <FinContainer ref={me} className={`fin-${path}--container`}>
       <FinWrapper
         onClick={handleNavigate}
         className={cx(`fin-${path}--wrapper`, index && 'fin-index', active && 'fin-active')}

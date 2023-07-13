@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useRef, useState } from 'react';
 import { Subject } from 'rxjs';
 
 type EventType = 'start' | 'end' | 'setting' | 'register';
@@ -8,18 +8,24 @@ export interface Event {
   type: EventType;
   currentPath: string;
   nextPath?: string;
+  indicatorX?: number;
 }
 
+type Handler = (
+  event: Event,
+  patcher: (patch: Partial<Pick<FinContext, 'currentPath' | 'nextPath'>>) => void,
+  ...args: any[]
+) => void;
 export interface EventHandler {
   type: EventType;
-  handler: (event: Event, ...args: any[]) => void;
+  handler: Handler;
 }
 
 export interface FinContext {
   next: (event: Event) => void;
   currentPath: string;
   nextPath?: string;
-  register: (handler: EventHandler) => void;
+  register: (handler: EventHandler | EventHandler[]) => void;
 }
 
 export const FinContext = createContext<FinContext>({
@@ -41,6 +47,7 @@ function FinProvider(props: FinProviderProps) {
   // state, ref, querystring hooks
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentPath, setCurrentPath] = useState<string>('');
+  const [nextPath, setNextPath] = useState<string>();
   const finSubject = useRef<Subject<Event>>(new Subject());
   const handlers = useRef<EventHandler[]>([]);
 
@@ -49,14 +56,23 @@ function FinProvider(props: FinProviderProps) {
   // query hooks
 
   // calculated values
-  const register = (eventHandler: EventHandler) => handlers.current.push(eventHandler);
+  const register = useCallback(
+    (eventHandler: EventHandler | EventHandler[]) =>
+      eventHandler instanceof Array ? handlers.current.push(...eventHandler) : handlers.current.push(eventHandler),
+    [],
+  );
 
   // effects
   useEffect(() => {
     finSubject.current.subscribe((event: Event) => {
       handlers.current.forEach((eventHandler) => {
         if (eventHandler.type === event.type) {
-          eventHandler.handler(event);
+          eventHandler.handler(event, (patch) => {
+            const { currentPath, nextPath } = patch;
+            console.log(patch);
+            if (currentPath) setCurrentPath(currentPath);
+            if (nextPath) setNextPath(nextPath);
+          });
         }
       });
     });
@@ -68,7 +84,7 @@ function FinProvider(props: FinProviderProps) {
       },
     });
     setIsLoading(false);
-  }, []);
+  }, [register]);
 
   // handlers
 
@@ -79,6 +95,7 @@ function FinProvider(props: FinProviderProps) {
       value={{
         next: (event) => finSubject.current.next(event),
         currentPath,
+        nextPath,
         register,
       }}
     >

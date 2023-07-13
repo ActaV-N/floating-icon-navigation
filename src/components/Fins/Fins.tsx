@@ -1,9 +1,10 @@
 'use client';
 
 import styled from '@emotion/styled';
-import { useContext, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { useAnimate } from 'framer-motion';
 import { FinContext } from '~components/FinProvider';
+import { OFFSET_ERROR } from '~const';
 
 const FinsContainer = styled.div`
   max-width: 310px;
@@ -37,7 +38,7 @@ const IndicatorContainer = styled.div`
   padding: 5px 10px;
 `;
 
-const Indicator = motion(styled.div`
+const Indicator = styled.div`
   position: absolute;
 
   height: 48px;
@@ -46,7 +47,7 @@ const Indicator = motion(styled.div`
   border-radius: 24px;
 
   background: #fff;
-`);
+`;
 
 export interface FinsProps {
   children: React.ReactNode;
@@ -69,9 +70,11 @@ function Fins(props: FinsProps) {
   const { children } = props;
 
   // lib hooks
-  const { next } = useContext(FinContext);
+  const { next, register, nextPath } = useContext(FinContext);
+  const [scope, animate] = useAnimate();
 
   // state, ref, querystring hooks
+  const [indicatorX, setIndicatorX] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // form hooks
@@ -87,13 +90,47 @@ function Fins(props: FinsProps) {
       if (!initialFin) throw Error('Need activated Fin component');
 
       const path = initialFin.dataset.path ?? '';
-
+      let indicatorX = initialFin.offsetLeft - OFFSET_ERROR;
+      if (indicatorX < 0) indicatorX = 0;
       next({
         type: 'setting',
         currentPath: path,
+        indicatorX,
       });
+      setIndicatorX(indicatorX);
     }
-  }, [containerRef, next]);
+  }, [containerRef]);
+
+  useEffect(() => {
+    register({
+      type: 'start',
+      handler: (event, patcher) => {
+        const { indicatorX } = event;
+        if (indicatorX !== undefined) {
+          setIndicatorX(indicatorX);
+        }
+
+        patcher(event);
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    const indicatorAnimation = async () => {
+      await animate(scope.current, {
+        opacity: '1',
+        x: indicatorX,
+      });
+
+      next({
+        currentPath: nextPath!,
+        type: 'end',
+        nextPath: undefined,
+      });
+    };
+
+    indicatorAnimation();
+  }, [indicatorX]);
 
   // handlers
 
@@ -101,7 +138,7 @@ function Fins(props: FinsProps) {
     <FinsContainer ref={containerRef}>
       <FinsWrapper>
         <IndicatorContainer>
-          <Indicator className='indicator' />
+          <Indicator ref={scope} className='indicator' />
         </IndicatorContainer>
         {children}
       </FinsWrapper>
