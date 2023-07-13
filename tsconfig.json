@@ -22,5 +22,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "~components": ["src/components"],
+      "~components/*": ["src/components/*"]
+    }
   }
 }
