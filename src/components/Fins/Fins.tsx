@@ -17,7 +17,7 @@ function Fins() {
 
   // handlers
 
-  return '';
+  return <div></div>;
 }
 
 export { Fins };
