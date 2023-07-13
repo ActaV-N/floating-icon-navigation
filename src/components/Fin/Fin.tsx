@@ -49,7 +49,8 @@ const FinIcon = styled.div<{ color: string }>`
 export interface FinProps {
   icon: React.ReactNode;
   path: string;
-  active?: boolean | string;
+  index?: boolean;
+  activeColor?: string;
 }
 
 /**
@@ -63,7 +64,7 @@ export interface FinProps {
  */
 function Fin(props: FinProps) {
   // prop destruction
-  const { icon, active, path } = props;
+  const { icon, index, path, activeColor } = props;
 
   // lib hooks
   const { next, currentPath } = useContext(FinContext);
@@ -75,13 +76,8 @@ function Fin(props: FinProps) {
   // query hooks
 
   // calculated values
-  const color = useMemo(() => {
-    if (typeof active === 'string') {
-      return active;
-    }
-
-    return DEFAULT_COLOR;
-  }, [active]);
+  const color = useMemo(() => activeColor ?? DEFAULT_COLOR, [activeColor]);
+  const active = useMemo<boolean>(() => currentPath === path, [currentPath, path]);
 
   // effects
 
@@ -96,8 +92,12 @@ function Fin(props: FinProps) {
   };
 
   return (
-    <FinContainer>
-      <FinWrapper onClick={handleNavigate} className={cx(`fin-${path}`, active && 'fin-active')} data-path={path}>
+    <FinContainer className={`fin-${path}--container`}>
+      <FinWrapper
+        onClick={handleNavigate}
+        className={cx(`fin-${path}--wrapper`, index && 'fin-index', active && 'fin-active')}
+        data-path={path}
+      >
         <FinIcon color={color}>{icon}</FinIcon>
       </FinWrapper>
     </FinContainer>

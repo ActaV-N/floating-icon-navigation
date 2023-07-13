@@ -2,6 +2,7 @@
 
 import styled from '@emotion/styled';
 import { useContext, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { FinContext } from '~components/FinProvider';
 
 const FinsContainer = styled.div`
@@ -36,7 +37,7 @@ const IndicatorContainer = styled.div`
   padding: 5px 10px;
 `;
 
-const Indicator = styled.div`
+const Indicator = motion(styled.div`
   position: absolute;
 
   height: 48px;
@@ -45,7 +46,7 @@ const Indicator = styled.div`
   border-radius: 24px;
 
   background: #fff;
-`;
+`);
 
 export interface FinsProps {
   children: React.ReactNode;
@@ -82,7 +83,7 @@ function Fins(props: FinsProps) {
   // effects
   useEffect(() => {
     if (containerRef.current) {
-      const initialFin = containerRef.current.querySelector<HTMLDivElement>('.fin-active');
+      const initialFin = containerRef.current.querySelector<HTMLDivElement>('.fin-index');
       if (!initialFin) throw Error('Need activated Fin component');
 
       const path = initialFin.dataset.path ?? '';
