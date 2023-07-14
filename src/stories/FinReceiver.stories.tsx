@@ -12,12 +12,12 @@ const wrapper = (storyFn: any) => (
       height: '100vh',
       display: 'flex',
       justifyContent: 'center',
+      flexDirection: 'column',
       alignItems: 'center',
       background: '#1D1D1C',
     }}
   >
-    {storyFn()}
-
+    <div>{storyFn()}</div>
     <Fins>
       <Fin path='alert' activeColor='#FA5252' icon={<AiFillAlert />}>
         Hello

@@ -1,15 +1,18 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useFin } from '~hooks';
+import { useEffect, useState } from 'react';
+import { useFin, useFinEnd } from '~hooks';
 
 function FinReceiver() {
   // prop destruction
-  const { contentMap } = useFin();
 
   // lib hooks
+  const { contentMap, currentPath } = useFin();
+  const [_, registerEnd] = useFinEnd();
 
   // state, ref, querystring hooks
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [children, setChildren] = useState<React.ReactNode>(contentMap[currentPath]);
 
   // form hooks
 
@@ -19,12 +22,19 @@ function FinReceiver() {
 
   // effects
   useEffect(() => {
-    console.log(contentMap);
-  }, [contentMap]);
+    registerEnd((event) => {
+      setIsLoading(false);
+      setChildren(contentMap[event.currentPath]);
+    });
+  }, []);
 
   // handlers
 
-  return '';
+  if (isLoading) {
+    return <></>;
+  }
+
+  return <>{children}</>;
 }
 
 export { FinReceiver };

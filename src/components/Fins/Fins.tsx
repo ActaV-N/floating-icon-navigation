@@ -108,6 +108,9 @@ function Fins(props: FinsProps) {
         currentPath: path,
         indicatorX,
       });
+      triggerEnd({
+        currentPath: path,
+      });
     }
   }, [containerRef]);
 
@@ -117,9 +120,11 @@ function Fins(props: FinsProps) {
         x: indicatorX,
       });
 
-      triggerEnd({
-        currentPath: nextPath!,
-      });
+      if (nextPath) {
+        triggerEnd({
+          currentPath: nextPath,
+        });
+      }
     };
 
     if (initialized) {

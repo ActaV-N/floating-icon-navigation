@@ -51,10 +51,10 @@ function FinProvider(props: FinProviderProps) {
   const handlers = useRef<EventHandler[]>([]);
 
   // Event, context state
+  const contentMap = useRef<ContentMap>({});
   const [currentPath, setCurrentPath] = useState<string>('');
   const [nextPath, setNextPath] = useState<string>();
   const [indicatorX, setIndicatorX] = useState<number>();
-  const [contentMap, setContentMap] = useState<ContentMap>({});
 
   // form hooks
 
@@ -71,14 +71,14 @@ function FinProvider(props: FinProviderProps) {
   useEffect(() => {
     finSubject.current.subscribe(async (event: Event) => {
       if (event.type === 'register') {
-        setContentMap((contentMap) => ({ ...contentMap, [event.currentPath]: event.children }));
+        contentMap.current[event.currentPath] = event.children;
       }
 
       handlers.current.forEach(async (eventHandler) => {
         if (eventHandler.type === event.type) {
-          setCurrentPath(event.currentPath);
-          setNextPath(event.nextPath);
-          setIndicatorX(event.indicatorX);
+          event.currentPath && setCurrentPath(event.currentPath);
+          setNextPath((nextPath) => event.nextPath ?? nextPath);
+          setIndicatorX((indicatorX) => event.indicatorX ?? indicatorX);
 
           await eventHandler.handler(event);
         }
@@ -98,7 +98,7 @@ function FinProvider(props: FinProviderProps) {
         currentPath,
         nextPath,
         indicatorX,
-        contentMap,
+        contentMap: contentMap.current,
         register,
       }}
     >
