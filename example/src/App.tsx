@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Fin, Fins, FinReceiver } from '@actav/floating-icon-navigation';
+import { AiFillHome, AiFillGithub, AiFillExclamationCircle } from 'react-icons/ai';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <h1>Floating Icon Navigation</h1>
+      <div className='container'>
+        <Fins>
+          <Fin index path='main' activeColor='#4263EB' icon={<AiFillHome />}>
+            Home
+          </Fin>
+          <Fin path='git' icon={<AiFillGithub />}>
+            Go to{' '}
+            <a href='https://github.com/ActaV-N/floating-icon-navigation' target='_blank' rel='noopener'>
+              repository
+            </a>
+          </Fin>
+          <Fin path='info' activeColor='#40C057' icon={<AiFillExclamationCircle />}>
+            This package is created by Lee
+          </Fin>
+        </Fins>
+
+        <FinReceiver />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
