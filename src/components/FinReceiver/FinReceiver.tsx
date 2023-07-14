@@ -30,9 +30,13 @@ function FinReceiver() {
   // effects
   useEffect(() => {
     if (!isLoading) {
-      animate(scope.current, {
-        opacity: 1,
-      });
+      animate(
+        scope.current,
+        {
+          opacity: 1,
+        },
+        { duration: 0.2 },
+      );
     }
   }, [isLoading]);
 
@@ -41,16 +45,24 @@ function FinReceiver() {
       setIsLoading(false);
       setChildren(contentMap[event.currentPath]);
       if (scope.current) {
-        animate(scope.current, {
-          opacity: 1,
-        });
+        animate(
+          scope.current,
+          {
+            opacity: 1,
+          },
+          { duration: 0.2 },
+        );
       }
     });
 
     registerStart(() => {
-      animate(scope.current, {
-        opacity: 0,
-      });
+      animate(
+        scope.current,
+        {
+          opacity: 0,
+        },
+        { duration: 0.2 },
+      );
     });
   }, []);
 

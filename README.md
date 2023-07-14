@@ -18,6 +18,23 @@ npm install @actav/floating-icon-navigation
 
 # Usage
 
+## Provider
+
+Wrap your App with Fin `Provider`
+
+```ts
+// ... some imports
+import { FinProvider } from '@actav/floating-icon-navigation';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <FinProvider>
+      <App />
+    </FinProvider>
+  </React.StrictMode>,
+);
+```
+
 ## Components
 
 ### Fins, Fin: Content Generator
