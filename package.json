@@ -23,6 +23,10 @@
     "LICENSE",
     "README.md"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ActaV-N/floating-icon-navigation.git"
+  },
   "license": "MIT",
   "dependencies": {
     "@emotion/core": "^11.0.0",
