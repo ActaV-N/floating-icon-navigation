@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { cx } from '@emotion/css';
 import { EASE_IN_OUT, DEFAULT_COLOR, OFFSET_ERROR } from '~const';
-import { useFin, useFinStart, useFinSetting, useFinRegister } from '~hooks';
+import { useFin, useFinStart, useFinSetting, useFinRegister, useFinEnd } from '~hooks';
 
 const FinContainer = styled.div`
   width: 48px;
@@ -73,11 +73,13 @@ function Fin(props: FinProps) {
   // lib hooks
   const { currentPath } = useFin();
   const [triggerStart, registerStart] = useFinStart();
-  const [_, __, registerSettingEnd] = useFinSetting();
+  const [_, registerEnd] = useFinEnd();
+  const [__, ___, registerSettingEnd] = useFinSetting();
   const [triggerRegister] = useFinRegister();
 
   // state, ref, querystring hooks
   const [active, setActive] = useState<boolean>(false);
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const me = useRef<HTMLDivElement>(null);
 
   // form hooks
@@ -108,14 +110,19 @@ function Fin(props: FinProps) {
     });
 
     registerStart((event) => {
+      setIsAnimating(true);
       if (event.nextPath === path) setActive(true);
       else setActive(false);
+    });
+
+    registerEnd(() => {
+      setIsAnimating(false);
     });
   }, []);
 
   // handlers
   const handleNavigate = () => {
-    if (active) return;
+    if (active || isAnimating) return;
     triggerStart({
       currentPath,
       nextPath: path,
