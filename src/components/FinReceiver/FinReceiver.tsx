@@ -1,14 +1,21 @@
 'use client';
 
+import styled from '@emotion/styled';
+import { motion, useAnimate } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { useFin, useFinEnd } from '~hooks';
+import { useFin, useFinEnd, useFinStart } from '~hooks';
+
+const FinReceiverContainer = motion(styled.div``);
 
 function FinReceiver() {
   // prop destruction
 
   // lib hooks
+  const [scope, animate] = useAnimate();
+
   const { contentMap, currentPath } = useFin();
   const [_, registerEnd] = useFinEnd();
+  const [__, registerStart] = useFinStart();
 
   // state, ref, querystring hooks
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -22,9 +29,28 @@ function FinReceiver() {
 
   // effects
   useEffect(() => {
-    registerEnd((event) => {
+    if (!isLoading) {
+      animate(scope.current, {
+        opacity: 1,
+      });
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    registerEnd(async (event) => {
       setIsLoading(false);
       setChildren(contentMap[event.currentPath]);
+      if (scope.current) {
+        animate(scope.current, {
+          opacity: 1,
+        });
+      }
+    });
+
+    registerStart(() => {
+      animate(scope.current, {
+        opacity: 0,
+      });
     });
   }, []);
 
@@ -34,7 +60,11 @@ function FinReceiver() {
     return <></>;
   }
 
-  return <>{children}</>;
+  return (
+    <FinReceiverContainer initial={{ opacity: 0 }} ref={scope}>
+      {children}
+    </FinReceiverContainer>
+  );
 }
 
 export { FinReceiver };

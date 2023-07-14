@@ -15,6 +15,7 @@ const wrapper = (storyFn: any) => (
       flexDirection: 'column',
       alignItems: 'center',
       background: '#1D1D1C',
+      color: '#fff',
     }}
   >
     <div>{storyFn()}</div>
