@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { cx } from '@emotion/css';
 import { EASE_IN_OUT, DEFAULT_COLOR, OFFSET_ERROR } from '~const';
-import { FinContext } from '~components/FinProvider';
+import { useFin, useFinRegister, useFinStart } from '~hooks';
 
 const FinContainer = styled.div`
   width: 48px;
@@ -70,7 +70,9 @@ function Fin(props: FinProps) {
   const { icon, index, path, activeColor } = props;
 
   // lib hooks
-  const { next, currentPath, register } = useContext(FinContext);
+  const { currentPath } = useFin();
+  const [triggerStart, registerStart] = useFinStart();
+  const [_, registerSetting] = useFinRegister();
 
   // state, ref, querystring hooks
   const [active, setActive] = useState<boolean>(false);
@@ -93,33 +95,25 @@ function Fin(props: FinProps) {
 
   // effects
   useEffect(() => {
-    register([
-      {
-        type: 'setting',
-        handler: (event) => {
-          if (event.currentPath === path) {
-            setActive(true);
-          }
-        },
-      },
-      {
-        type: 'start',
-        handler: (event) => {
-          if (event.nextPath === path) setActive(true);
-          else setActive(false);
-        },
-      },
-    ]);
+    registerSetting((event) => {
+      if (event.currentPath === path) {
+        setActive(true);
+      }
+    });
+
+    registerStart((event) => {
+      if (event.nextPath === path) setActive(true);
+      else setActive(false);
+    });
   }, []);
 
   // handlers
   const handleNavigate = () => {
     if (active) return;
-    next({
+    triggerStart({
       currentPath,
       nextPath: path,
       indicatorX: myPositionX,
-      type: 'start',
     });
   };
 

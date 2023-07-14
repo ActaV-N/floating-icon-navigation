@@ -1,6 +1,6 @@
 'use client';
 
-import { useFinEvent, type TriggerEventParams, type RegisterHandler } from './use-fin-event';
+import { useFinEvent, type TriggerEventParams, type RegisterHandler, type FinHooks } from './use-fin-event';
 
 function useFinStart() {
   const [triggerEvent, registerHandler] = useFinEvent();
@@ -9,7 +9,7 @@ function useFinStart() {
 
   const registerStartHandler = (handler: RegisterHandler) => registerHandler('start', handler);
 
-  return [triggerStartEvent, registerStartHandler];
+  return [triggerStartEvent, registerStartHandler] as FinHooks;
 }
 
 export { useFinStart };

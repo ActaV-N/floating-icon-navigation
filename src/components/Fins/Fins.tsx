@@ -1,10 +1,10 @@
 'use client';
 
 import styled from '@emotion/styled';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAnimate } from 'framer-motion';
-import { FinContext } from '~components/FinProvider';
 import { OFFSET_ERROR } from '~const';
+import { useFin, useFinEnd, useFinSetting } from '~hooks';
 
 const FinsContainer = styled.div`
   max-width: 310px;
@@ -70,7 +70,9 @@ function Fins(props: FinsProps) {
   const { children } = props;
 
   // lib hooks
-  const { next, nextPath, indicatorX, register } = useContext(FinContext);
+  const { nextPath, indicatorX } = useFin();
+  const [triggerEnd] = useFinEnd();
+  const [triggerSetting, registerSetting] = useFinSetting();
   const [scope, animate] = useAnimate();
 
   // state, ref, querystring hooks
@@ -85,14 +87,11 @@ function Fins(props: FinsProps) {
 
   // effects
   useEffect(() => {
-    register({
-      type: 'setting',
-      handler: async (event) => {
-        await animate(scope.current, { x: event.indicatorX, scale: 0.8, opacity: 0 }, { duration: 0 });
-        await animate(scope.current, { scale: 1, opacity: 1 });
+    registerSetting(async (event) => {
+      await animate(scope.current, { x: event.indicatorX, scale: 0.8, opacity: 0 }, { duration: 0 });
+      await animate(scope.current, { scale: 1, opacity: 1 });
 
-        setInitialized(true);
-      },
+      setInitialized(true);
     });
   }, []);
 
@@ -105,8 +104,7 @@ function Fins(props: FinsProps) {
       let indicatorX = initialFin.offsetLeft - OFFSET_ERROR;
 
       if (indicatorX < 0) indicatorX = 0;
-      next({
-        type: 'setting',
+      triggerSetting({
         currentPath: path,
         indicatorX,
       });
@@ -119,10 +117,8 @@ function Fins(props: FinsProps) {
         x: indicatorX,
       });
 
-      next({
+      triggerEnd({
         currentPath: nextPath!,
-        type: 'end',
-        nextPath: undefined,
       });
     };
 

@@ -6,6 +6,11 @@ import { FinContext, type EventType, type Event, type EventHandler } from '~comp
 export type TriggerEventParams = Omit<Event, 'type'>;
 export type RegisterHandler = EventHandler['handler'];
 
+export type FinHooks = [
+  (params: TriggerEventParams) => (type: EventType, params: TriggerEventParams) => void,
+  (handler: RegisterHandler) => (type: EventType, handler: RegisterHandler) => void,
+];
+
 function useFinEvent() {
   const { next, register } = useContext(FinContext);
 
