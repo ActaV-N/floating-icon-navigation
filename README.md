@@ -1,6 +1,13 @@
 # Floating-icon-navigation
 
+[![NPM version][npm-image]][https://www.npmjs.com/package/@actav/floating-icon-navigation]
+[![Build][github-build]][https://github.com/ActaV-N/floating-icon-navigation/actions]
+![npm-typescript]
+[![License][github-license]][https://github.com/ActaV-N/floating-icon-navigation/blob/main/LICENSE]
+
 (Name should be changed...I think...)
+
+[**Live Demo**](https://actav-n.github.io/floating-icon-navigation/)
 
 Ex)
 
