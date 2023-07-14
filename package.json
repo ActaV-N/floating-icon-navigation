@@ -1,6 +1,6 @@
 {
   "name": "@actav/floating-icon-navigation",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "",
   "scripts": {
     "build": "yarn build:esm && yarn build:cjs",
@@ -18,6 +18,8 @@
   "author": "Lee",
   "files": [
     "dist",
+    "src/**/*.ts",
+    "src/**/*.tsx",
     "LICENSE",
     "README.md"
   ],
@@ -31,6 +33,7 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
