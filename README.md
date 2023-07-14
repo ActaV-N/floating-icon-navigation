@@ -1,9 +1,12 @@
 # Floating-icon-navigation
 
-[![NPM version][npm-image]][https://www.npmjs.com/package/@actav/floating-icon-navigation]
-[![Build][github-build]][https://github.com/ActaV-N/floating-icon-navigation/actions]
-![npm-typescript]
-[![License][github-license]][https://github.com/ActaV-N/floating-icon-navigation/blob/main/LICENSE]
+![npm](https://img.shields.io/npm/v/%40actav%2Ffloating-icon-navigation)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/actav-n/floating-icon-navigation/publish.yml)
+![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/ActaV-N/floating-icon-navigation)
+![NPM](https://img.shields.io/npm/l/%40actav%2Ffloating-icon-navigation)
+
+
+
 
 (Name should be changed...I think...)
 
