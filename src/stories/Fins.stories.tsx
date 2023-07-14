@@ -51,8 +51,8 @@ export const Fit: StoryObj<ArgTypes> = {
       <>
         <Fin path='alert' activeColor='#FA5252' icon={<AiFillAlert />} />
         <Fin index path='square' activeColor='#20C997' icon={<AiFillAlipaySquare />} />
-        <Fin path='circle' icon={<AiFillAmazonCircle />} />
-        <Fin path='audio' icon={<AiFillAudio />} />
+        <Fin path='circle' activeColor='#5C7CFA' icon={<AiFillAmazonCircle />} />
+        <Fin path='audio' activeColor='#845EF7' icon={<AiFillAudio />} />
         <Fin path='bank' icon={<AiFillBank />} />
       </>
     ),
