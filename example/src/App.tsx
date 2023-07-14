@@ -12,7 +12,7 @@ function App() {
             Home
           </Fin>
           <Fin path='git' icon={<AiFillGithub />}>
-            Go to{' '}
+            Visit{' '}
             <a href='https://github.com/ActaV-N/floating-icon-navigation' target='_blank' rel='noopener'>
               repository
             </a>
