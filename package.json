@@ -1,6 +1,6 @@
 {
   "name": "@actav/floating-icon-navigation",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "scripts": {
     "build": "yarn build:esm && yarn build:cjs",
