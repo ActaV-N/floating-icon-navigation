@@ -1,6 +1,6 @@
 {
   "name": "@actav/floating-icon-navigation",
-  "version": "1.0.1",
+  "version": "0.0.0",
   "description": "",
   "scripts": {
     "build": "yarn build:esm && yarn build:cjs",
@@ -22,14 +22,18 @@
     "README.md"
   ],
   "license": "MIT",
-  "devDependencies": {
-    "@babel/preset-env": "^7.22.9",
-    "@babel/preset-react": "^7.22.5",
-    "@babel/preset-typescript": "^7.22.5",
+  "dependencies": {
     "@emotion/core": "^11.0.0",
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "rxjs": "^7.8.1",
+    "framer-motion": "^10.12.18"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.22.9",
+    "@babel/preset-react": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
     "@storybook/addon-essentials": "^7.0.27",
     "@storybook/addon-interactions": "^7.0.27",
     "@storybook/addon-links": "^7.0.27",
@@ -46,13 +50,11 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.12",
-    "framer-motion": "^10.12.18",
     "prettier": "^3.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
-    "rxjs": "^7.8.1",
     "storybook": "^7.0.27",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.1.6"
