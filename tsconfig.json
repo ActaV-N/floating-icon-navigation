@@ -2,8 +2,7 @@
   "include": ["src"],
   "exclude": [
     "dist",
-    "node_modules",
-    "example"
+    "node_modules"
   ],
   "compilerOptions": {
     "module": "esnext",
@@ -19,16 +18,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "moduleResolution": "node",
-    "jsx": "react-jsx",
+    "jsx": "react",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "~components": ["src/components"],
-      "~components/*": ["src/components/*"],
-      "~const": ["src/style"],
-      "~hooks": ["src/hooks"],
-    }
   }
 }

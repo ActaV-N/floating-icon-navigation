@@ -1,3 +1,4 @@
+import React from 'react';
 import { Fin, Fins, FinReceiver } from '@actav/floating-icon-navigation';
 import { AiFillHome, AiFillGithub, AiFillExclamationCircle } from 'react-icons/ai';
 import './App.css';
