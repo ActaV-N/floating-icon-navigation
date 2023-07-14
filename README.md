@@ -1,8 +1,10 @@
 # Floating-icon-navigation
 
-(Name should be changed...)
+(Name should be changed...I think...)
 
-[Example image should be here]
+Ex)
+
+![Screen Recording 2023-07-15 at 1 21 05 AM](https://github.com/ActaV-N/floating-icon-navigation/assets/26318387/8346f7bb-cd15-437e-b67b-81d79d5351af)
 
 # Installation
 
@@ -91,5 +93,3 @@ export default Receiver;
 If you add receiver, result will be like this:
 
 <img width="343" alt="Screenshot 2023-07-15 at 1 18 39 AM" src="https://github.com/ActaV-N/floating-icon-navigation/assets/26318387/84c8217a-2b56-4dbf-a7c6-b0094a4795b0">
-
-Final result:
