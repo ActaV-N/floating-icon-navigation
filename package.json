@@ -1,16 +1,27 @@
 {
   "name": "@actav/floating-icon-navigation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "yarn build:esm && yarn build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepare": "yarn build",
+    "prepublish": "yarn prettier && yarn lint"
   },
-  "author": "",
-  "license": "ISC",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "esm": "./dist/esm/index.js",
+  "author": "Lee",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "license": "MIT",
   "devDependencies": {
     "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
@@ -47,7 +58,11 @@
     "typescript": "^5.1.6"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=16",
+    "@emotion/styled": "^11.11.0",
+    "@emotion/css": "^11.11.0",
+    "rxjs": "^7.8.1",
+    "framer-motion": "^10.12.18"
   },
   "eslintConfig": {
     "extends": [
