@@ -4,9 +4,9 @@ import { useContext } from 'react';
 import { FinContext } from '~components/FinProvider';
 
 function useFin() {
-  const { currentPath, nextPath, indicatorX } = useContext(FinContext);
+  const { currentPath, nextPath, indicatorX, contentMap } = useContext(FinContext);
 
-  return { currentPath, nextPath, indicatorX };
+  return { currentPath, nextPath, indicatorX, contentMap };
 }
 
 export { useFin };

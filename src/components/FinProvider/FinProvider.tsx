@@ -7,6 +7,7 @@ export type EventType = 'start' | 'end' | 'setting' | 'register' | 'setting-end'
 export interface Event {
   type: EventType;
   currentPath: string;
+  children?: React.ReactNode;
   nextPath?: string;
   indicatorX?: number;
 }
@@ -17,17 +18,20 @@ export interface EventHandler {
   handler: Handler;
 }
 
+type ContentMap = Record<string, React.ReactNode>;
 export interface FinContext {
   next: (event: Event) => void;
   currentPath: string;
   nextPath?: string;
   indicatorX?: number;
+  contentMap: ContentMap;
   register: (handler: EventHandler | EventHandler[]) => void;
 }
 
 export const FinContext = createContext<FinContext>({
   next: () => {},
   currentPath: '',
+  contentMap: {},
   register: () => {},
 });
 
@@ -43,14 +47,14 @@ function FinProvider(props: FinProviderProps) {
 
   // state, ref, querystring hooks
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const finSubject = useRef<Subject<Event>>(new Subject());
+  const handlers = useRef<EventHandler[]>([]);
 
   // Event, context state
   const [currentPath, setCurrentPath] = useState<string>('');
   const [nextPath, setNextPath] = useState<string>();
   const [indicatorX, setIndicatorX] = useState<number>();
-
-  const finSubject = useRef<Subject<Event>>(new Subject());
-  const handlers = useRef<EventHandler[]>([]);
+  const [contentMap, setContentMap] = useState<ContentMap>({});
 
   // form hooks
 
@@ -66,11 +70,16 @@ function FinProvider(props: FinProviderProps) {
   // effects
   useEffect(() => {
     finSubject.current.subscribe(async (event: Event) => {
+      if (event.type === 'register') {
+        setContentMap((contentMap) => ({ ...contentMap, [event.currentPath]: event.children }));
+      }
+
       handlers.current.forEach(async (eventHandler) => {
         if (eventHandler.type === event.type) {
           setCurrentPath(event.currentPath);
           setNextPath(event.nextPath);
           setIndicatorX(event.indicatorX);
+
           await eventHandler.handler(event);
         }
       });
@@ -89,6 +98,7 @@ function FinProvider(props: FinProviderProps) {
         currentPath,
         nextPath,
         indicatorX,
+        contentMap,
         register,
       }}
     >

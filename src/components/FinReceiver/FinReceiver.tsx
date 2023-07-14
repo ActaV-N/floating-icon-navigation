@@ -1,7 +1,11 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useFin } from '~hooks';
+
 function FinReceiver() {
   // prop destruction
+  const { contentMap } = useFin();
 
   // lib hooks
 
@@ -14,6 +18,9 @@ function FinReceiver() {
   // calculated values
 
   // effects
+  useEffect(() => {
+    console.log(contentMap);
+  }, [contentMap]);
 
   // handlers
 

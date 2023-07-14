@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { cx } from '@emotion/css';
 import { EASE_IN_OUT, DEFAULT_COLOR, OFFSET_ERROR } from '~const';
-import { useFin, useFinStart, useFinSetting } from '~hooks';
+import { useFin, useFinStart, useFinSetting, useFinRegister } from '~hooks';
 
 const FinContainer = styled.div`
   width: 48px;
@@ -54,6 +54,7 @@ export interface FinProps {
   path: string;
   index?: boolean;
   activeColor?: string;
+  children: React.ReactNode;
 }
 
 /**
@@ -67,12 +68,13 @@ export interface FinProps {
  */
 function Fin(props: FinProps) {
   // prop destruction
-  const { icon, index, path, activeColor } = props;
+  const { icon, index, path, activeColor, children } = props;
 
   // lib hooks
   const { currentPath } = useFin();
   const [triggerStart, registerStart] = useFinStart();
   const [_, __, registerSettingEnd] = useFinSetting();
+  const [triggerRegister] = useFinRegister();
 
   // state, ref, querystring hooks
   const [active, setActive] = useState<boolean>(false);
@@ -99,6 +101,10 @@ function Fin(props: FinProps) {
       if (event.currentPath === path) {
         setActive(true);
       }
+      triggerRegister({
+        currentPath: path,
+        children,
+      });
     });
 
     registerStart((event) => {
