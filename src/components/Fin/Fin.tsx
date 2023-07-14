@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { cx } from '@emotion/css';
 import { EASE_IN_OUT, DEFAULT_COLOR, OFFSET_ERROR } from '~const';
-import { useFin, useFinRegister, useFinStart } from '~hooks';
+import { useFin, useFinStart, useFinSetting } from '~hooks';
 
 const FinContainer = styled.div`
   width: 48px;
@@ -72,7 +72,7 @@ function Fin(props: FinProps) {
   // lib hooks
   const { currentPath } = useFin();
   const [triggerStart, registerStart] = useFinStart();
-  const [_, registerSetting] = useFinRegister();
+  const [_, __, registerSettingEnd] = useFinSetting();
 
   // state, ref, querystring hooks
   const [active, setActive] = useState<boolean>(false);
@@ -95,7 +95,7 @@ function Fin(props: FinProps) {
 
   // effects
   useEffect(() => {
-    registerSetting((event) => {
+    registerSettingEnd((event) => {
       if (event.currentPath === path) {
         setActive(true);
       }

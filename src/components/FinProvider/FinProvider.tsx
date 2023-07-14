@@ -3,7 +3,7 @@
 import React, { createContext, useCallback, useEffect, useRef, useState } from 'react';
 import { Subject } from 'rxjs';
 
-export type EventType = 'start' | 'end' | 'setting' | 'register';
+export type EventType = 'start' | 'end' | 'setting' | 'register' | 'setting-end';
 export interface Event {
   type: EventType;
   currentPath: string;
@@ -11,7 +11,7 @@ export interface Event {
   indicatorX?: number;
 }
 
-type Handler = (event: Event, ...args: any[]) => void;
+type Handler = (event: Event, ...args: any[]) => Promise<void> | void;
 export interface EventHandler {
   type: EventType;
   handler: Handler;
@@ -65,13 +65,13 @@ function FinProvider(props: FinProviderProps) {
 
   // effects
   useEffect(() => {
-    finSubject.current.subscribe((event: Event) => {
-      handlers.current.forEach((eventHandler) => {
+    finSubject.current.subscribe(async (event: Event) => {
+      handlers.current.forEach(async (eventHandler) => {
         if (eventHandler.type === event.type) {
           setCurrentPath(event.currentPath);
           setNextPath(event.nextPath);
           setIndicatorX(event.indicatorX);
-          eventHandler.handler(event);
+          await eventHandler.handler(event);
         }
       });
     });

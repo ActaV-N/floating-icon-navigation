@@ -11,6 +11,12 @@ export type FinHooks = [
   (handler: RegisterHandler) => (type: EventType, handler: RegisterHandler) => void,
 ];
 
+export type FinHooks2 = [
+  (params: TriggerEventParams) => (type: EventType, params: TriggerEventParams) => void,
+  (handler: RegisterHandler) => (type: EventType, handler: RegisterHandler) => void,
+  (handler: RegisterHandler) => (type: EventType, handler: RegisterHandler) => void,
+];
+
 function useFinEvent() {
   const { next, register } = useContext(FinContext);
 
