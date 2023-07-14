@@ -1,11 +1,11 @@
 {
   "name": "@actav/floating-icon-navigation",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "scripts": {
     "build": "yarn build:esm && yarn build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "build:esm": "tsc && tsc-alias",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs && tsc-alias --outDir dist/cjs",
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
@@ -24,11 +24,11 @@
   "license": "MIT",
   "dependencies": {
     "@emotion/core": "^11.0.0",
-    "@emotion/css": "^11.11.2",
+    "@emotion/css": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "rxjs": "^7.8.1",
-    "framer-motion": "^10.12.18"
+    "framer-motion": "^10.12.18",
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.9",
@@ -56,15 +56,16 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "storybook": "^7.0.27",
+    "tsc-alias": "^1.8.7",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.1.6"
   },
   "peerDependencies": {
-    "react": ">=16",
-    "@emotion/styled": "^11.11.0",
     "@emotion/css": "^11.11.0",
-    "rxjs": "^7.8.1",
-    "framer-motion": "^10.12.18"
+    "@emotion/styled": "^11.11.0",
+    "framer-motion": "^10.12.18",
+    "react": ">=16",
+    "rxjs": "^7.8.1"
   },
   "eslintConfig": {
     "extends": [
