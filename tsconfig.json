@@ -27,6 +27,7 @@
       "~components": ["src/components"],
       "~components/*": ["src/components/*"],
       "~const": ["src/style", "src/components/Fin/const.ts", "src/components/Fins/const.ts"],
+      "~hooks": ["src/hooks"],
     }
   }
 }

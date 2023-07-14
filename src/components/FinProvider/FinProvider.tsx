@@ -3,7 +3,7 @@
 import React, { createContext, useCallback, useEffect, useRef, useState } from 'react';
 import { Subject } from 'rxjs';
 
-type EventType = 'start' | 'end' | 'setting' | 'register';
+export type EventType = 'start' | 'end' | 'setting' | 'register';
 export interface Event {
   type: EventType;
   currentPath: string;
