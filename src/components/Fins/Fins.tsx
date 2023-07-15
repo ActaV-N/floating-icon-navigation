@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 import { useAnimate } from 'framer-motion';
 import { OFFSET_ERROR } from '~const';
-import { useFin, useFinEnd, useFinSetting } from '~hooks';
+import { useFin, useFinEnd, useFinSetting, useFinReset } from '~hooks';
 
 const FinsContainer = styled.div`
   max-width: 310px;
@@ -73,6 +73,7 @@ function Fins(props: FinsProps) {
   const { nextPath, indicatorX } = useFin();
   const [triggerEnd] = useFinEnd();
   const [triggerSetting, registerSetting] = useFinSetting();
+  const resetFin = useFinReset();
   const [scope, animate] = useAnimate();
 
   // state, ref, querystring hooks
@@ -93,6 +94,10 @@ function Fins(props: FinsProps) {
 
       setInitialized(true);
     });
+
+    return () => {
+      resetFin();
+    };
   }, []);
 
   useEffect(() => {

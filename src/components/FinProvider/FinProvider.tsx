@@ -26,6 +26,7 @@ export interface FinContext {
   indicatorX?: number;
   contentMap: ContentMap;
   register: (handler: EventHandler | EventHandler[]) => void;
+  reset: () => void;
 }
 
 export const FinContext = createContext<FinContext>({
@@ -33,6 +34,7 @@ export const FinContext = createContext<FinContext>({
   currentPath: '',
   contentMap: {},
   register: () => {},
+  reset: () => {},
 });
 
 export interface FinProviderProps {
@@ -67,6 +69,13 @@ function FinProvider(props: FinProviderProps) {
     [],
   );
 
+  const reset = () => {
+    setCurrentPath('');
+    setIndicatorX(undefined);
+    setNextPath(undefined);
+    contentMap.current = {};
+  };
+
   // effects
   useEffect(() => {
     finSubject.current.subscribe(async (event: Event) => {
@@ -100,6 +109,7 @@ function FinProvider(props: FinProviderProps) {
         indicatorX,
         contentMap: contentMap.current,
         register,
+        reset,
       }}
     >
       {children}
