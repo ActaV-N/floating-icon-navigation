@@ -50,6 +50,7 @@ const Indicator = styled.div`
 `;
 
 export interface FinsProps {
+  className?: string;
   children: React.ReactNode;
 }
 
@@ -67,7 +68,7 @@ export interface FinsProps {
  */
 function Fins(props: FinsProps) {
   // prop destruction
-  const { children } = props;
+  const { className, children } = props;
 
   // lib hooks
   const { nextPath, indicatorX } = useFin();
@@ -140,7 +141,7 @@ function Fins(props: FinsProps) {
   // handlers
 
   return (
-    <FinsContainer ref={containerRef}>
+    <FinsContainer className={className} ref={containerRef}>
       <FinsWrapper>
         <IndicatorContainer>
           <Indicator ref={scope} className='indicator' />
