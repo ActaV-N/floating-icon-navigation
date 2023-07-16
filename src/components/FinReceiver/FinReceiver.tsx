@@ -7,7 +7,11 @@ import { useFin, useFinEnd, useFinStart } from '~hooks';
 
 const FinReceiverContainer = motion(styled.div``);
 
-function FinReceiver(props: { className?: string }) {
+export interface FinReceiverProps {
+  className?: string;
+}
+
+function FinReceiver(props: FinReceiverProps) {
   // prop destruction
   const { className } = props;
 
