@@ -6,6 +6,11 @@ import { cx } from '@emotion/css';
 import { EASE_IN_OUT, DEFAULT_COLOR, OFFSET_ERROR } from '~const';
 import { useFin, useFinStart, useFinSetting, useFinRegister, useFinEnd } from '~hooks';
 
+export const FinClasses = {
+  root: 'fin-container',
+  icon: 'fin-icon',
+};
+
 const FinContainer = styled.div`
   width: 48px;
   height: 48px;
@@ -131,12 +136,18 @@ function Fin(props: FinProps) {
   };
 
   return (
-    <FinContainer ref={me} className={cx(`fin-${path}--container`, index && 'fin-index--container')} data-path={path}>
+    <FinContainer
+      ref={me}
+      className={cx(`fin-${path}--container`, index && 'fin-index--container', FinClasses.root)}
+      data-path={path}
+    >
       <FinWrapper
         onClick={handleNavigate}
         className={cx(`fin-${path}--wrapper`, index && 'fin-index', active && 'fin-active')}
       >
-        <FinIcon color={color}>{icon}</FinIcon>
+        <FinIcon className={FinClasses.icon} color={color}>
+          {icon}
+        </FinIcon>
       </FinWrapper>
     </FinContainer>
   );

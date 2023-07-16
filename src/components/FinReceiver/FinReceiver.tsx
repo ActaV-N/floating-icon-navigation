@@ -7,8 +7,9 @@ import { useFin, useFinEnd, useFinStart } from '~hooks';
 
 const FinReceiverContainer = motion(styled.div``);
 
-function FinReceiver() {
+function FinReceiver(props: { className?: string }) {
   // prop destruction
+  const { className } = props;
 
   // lib hooks
   const [scope, animate] = useAnimate();
@@ -73,7 +74,7 @@ function FinReceiver() {
   }
 
   return (
-    <FinReceiverContainer initial={{ opacity: 0 }} ref={scope}>
+    <FinReceiverContainer className={className} initial={{ opacity: 0 }} ref={scope}>
       {children}
     </FinReceiverContainer>
   );
