@@ -27,6 +27,8 @@ export interface FinContext {
   contentMap: ContentMap;
   register: (handler: EventHandler | EventHandler[]) => void;
   reset: () => void;
+  initialized: boolean;
+  initialize: () => void;
 }
 
 export const FinContext = createContext<FinContext>({
@@ -35,6 +37,8 @@ export const FinContext = createContext<FinContext>({
   contentMap: {},
   register: () => {},
   reset: () => {},
+  initialized: false,
+  initialize: () => {},
 });
 
 export interface FinProviderProps {
@@ -51,6 +55,7 @@ function FinProvider(props: FinProviderProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const finSubject = useRef<Subject<Event>>(new Subject());
   const handlers = useRef<EventHandler[]>([]);
+  const [initialized, setInitialized] = useState<boolean>(false);
 
   // Event, context state
   const contentMap = useRef<ContentMap>({});
@@ -97,6 +102,9 @@ function FinProvider(props: FinProviderProps) {
   }, [register]);
 
   // handlers
+  const initialize = () => {
+    setInitialized(true);
+  };
 
   if (isLoading) return <></>;
 
@@ -110,6 +118,8 @@ function FinProvider(props: FinProviderProps) {
         contentMap: contentMap.current,
         register,
         reset,
+        initialized,
+        initialize,
       }}
     >
       {children}

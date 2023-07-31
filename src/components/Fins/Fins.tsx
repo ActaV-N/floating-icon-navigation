@@ -71,7 +71,7 @@ function Fins(props: FinsProps) {
   const { className, children } = props;
 
   // lib hooks
-  const { nextPath, indicatorX } = useFin();
+  const { nextPath, indicatorX, initialized: initializedGlobal } = useFin();
   const [triggerEnd] = useFinEnd();
   const [triggerSetting, registerSetting] = useFinSetting();
   const resetFin = useFinReset();
@@ -102,7 +102,7 @@ function Fins(props: FinsProps) {
   }, []);
 
   useEffect(() => {
-    if (containerRef.current) {
+    if (containerRef.current && initializedGlobal) {
       const initialFin = containerRef.current.querySelector<HTMLDivElement>('.fin-index--container');
       if (!initialFin) throw Error('Need activated Fin component');
 
@@ -118,7 +118,7 @@ function Fins(props: FinsProps) {
         currentPath: path,
       });
     }
-  }, [containerRef]);
+  }, [containerRef, initializedGlobal]);
 
   useEffect(() => {
     const indicatorAnimation = async () => {

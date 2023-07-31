@@ -18,7 +18,7 @@ function FinReceiver(props: FinReceiverProps) {
   // lib hooks
   const [scope, animate] = useAnimate();
 
-  const { contentMap, currentPath } = useFin();
+  const { contentMap, currentPath, initialize } = useFin();
   const [_, registerEnd] = useFinEnd();
   const [__, registerStart] = useFinStart();
 
@@ -69,6 +69,8 @@ function FinReceiver(props: FinReceiverProps) {
         { duration: 0.2 },
       );
     });
+
+    initialize();
   }, []);
 
   // handlers

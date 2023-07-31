@@ -18,7 +18,6 @@ const wrapper = (storyFn: any) => (
       color: '#fff',
     }}
   >
-    <div>{storyFn()}</div>
     <Fins>
       <Fin path='alert' activeColor='#FA5252' icon={<AiFillAlert />}>
         Hello
@@ -36,6 +35,7 @@ const wrapper = (storyFn: any) => (
         Hehe
       </Fin>
     </Fins>
+    <div>{storyFn()}</div>
   </div>
 );
 
