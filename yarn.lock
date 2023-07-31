@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@actav/floating-icon-navigation@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@actav/floating-icon-navigation/-/floating-icon-navigation-1.0.9.tgz#13638780ca685be98beb38b960d0abaeb8889673"
-  integrity sha512-qKQ0L5bTPwFm8mg5LIh3i0VA8cUXKlyZSIKE3qNx0jREoXrsBVB2OIEd/EgqroMqzgO6GFQQDyE10hWm8A4ZAg==
+"@actav/floating-icon-navigation@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@actav/floating-icon-navigation/-/floating-icon-navigation-1.0.10.tgz#46f773c869ad7cdec22c1349926b8275abdc6f8a"
+  integrity sha512-N9JCJ6w+B4oHJJPkg5Ne86iEotFP2sDsguz3pQbOSTUnqzEVhs7l24Qy9XBkSskTyd/UPoYXyyEYQjQufSuTRg==
   dependencies:
     "@emotion/core" "^11.0.0"
     "@emotion/css" "^11.11.0"
