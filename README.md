@@ -7,9 +7,6 @@
 
 
 
-
-(Name should be changed...I think...)
-
 [**Live Demo**](https://actav-n.github.io/floating-icon-navigation/)
 
 Ex)
@@ -103,3 +100,14 @@ export default Receiver;
 If you add receiver, result will be like this:
 
 <img width="343" alt="Screenshot 2023-07-15 at 1 18 39 AM" src="https://github.com/ActaV-N/floating-icon-navigation/assets/26318387/84c8217a-2b56-4dbf-a7c6-b0094a4795b0">
+
+## Props
+
+### Fin
+|  **props**  |                                                          **description**                                                         |     **type**    |
+|:-----------:|:--------------------------------------------------------------------------------------------------------------------------------:|:---------------:|
+| icon        | icon component, representing navigation button                                                                                   | React.ReactNode |
+| activeColor | css color string like hex, '#fff' or RGBA, 'rgba(255, 255, 255, 1)'. This activeColor will be applied when the fin is activated. | string?         |
+| index       | Default fin. It's optional property but **at least one <Fin/> should be a index**                                                | bolean?         |
+| path        | path for navigation. It's like ID.                                                                                               | string          |
+| children    | children of <Fin/> will be shown in Receiver.                                                                                    | React.ReactNode |
