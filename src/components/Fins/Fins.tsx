@@ -89,16 +89,20 @@ function Fins(props: FinsProps) {
 
   // effects
   useEffect(() => {
+    return () => {
+      if (initialized) {
+        resetFin();
+      }
+    };
+  }, [initialized]);
+
+  useEffect(() => {
     registerSetting(async (event) => {
       await animate(scope.current, { x: event.indicatorX, scale: 0.8, opacity: 0 }, { duration: 0 });
       await animate(scope.current, { scale: 1, opacity: 1 });
 
       setInitialized(true);
     });
-
-    return () => {
-      resetFin();
-    };
   }, []);
 
   useEffect(() => {

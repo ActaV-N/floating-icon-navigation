@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@actav/floating-icon-navigation": "^1.0.4",
+    "@actav/floating-icon-navigation": "^1.0.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1"

@@ -12,7 +12,9 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [(Story) => <FinProvider>{Story()}</FinProvider>],
+  decorators: [(Story) => <React.StrictMode>
+    <FinProvider>{Story()}</FinProvider>
+  </React.StrictMode>],
 };
 
 export default preview;
